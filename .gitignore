@@ -1,0 +1,14 @@
+.venv/
+venv/
+
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+dp_env/bin/
+dp_env/include/
+dp_env/lib/
+dp_env/lib64
+dp_env/share/
+dp_env/pyvenv.cfg
+dp_env/.ipynb_checkpoints/
