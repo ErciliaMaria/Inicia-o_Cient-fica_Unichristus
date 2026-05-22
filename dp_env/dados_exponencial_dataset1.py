@@ -26,23 +26,50 @@ epsilon_labels = ['0.1', 'ln(2)', 'ln(4)', '1.0']
 contagem_real = df['Faixa_Etaria'].value_counts().reindex(labels, fill_value=0)
 
 
-# 3. Define a função de score u(x, r): 1 quando a categoria coincide e 0 caso contrário.
-def funcao_score(valor_real, categoria):
-    return 1.0 if categoria == valor_real else 0.0
+# 3. Mapeia cada faixa etária para categorias numéricas de 1 a 4.
+categoria_id = {label: i + 1 for i, label in enumerate(labels)}
 
 
-# 4. Define a sensibilidade da função de score.
-delta_u = 1.0
+def funcao_score(cat_real_id, cat_saida_id):
+    # Penalidade quadrática negativa: maior distância entre categorias => menor escore.
+    return -float((cat_saida_id - cat_real_id) ** 2)
 
 
-def aplicar_exponencial_local(valor_real, eps, cats):
-    # 5. Calcula os pesos do mecanismo exponencial a partir do score, da sensibilidade e do epsilon.
-    pesos = np.array([
-        np.exp((eps * funcao_score(valor_real, categoria)) / (2.0 * delta_u))
+def calcular_sensibilidade_global(ids):
+    """
+    Calcula Delta_u global uma única vez considerando:
+    u(c_real, c_saida) = -(c_saida - c_real)^2
+    """
+    max_diff = 0.0
+    for c_real in ids:
+        for c_real_linha in ids:
+            for c_saida in ids:
+                diff = abs(funcao_score(c_real, c_saida) - funcao_score(c_real_linha, c_saida))
+                if diff > max_diff:
+                    max_diff = diff
+    return float(max_diff)
+
+
+# Sensibilidade global fixa para todo o experimento.
+delta_u_global = calcular_sensibilidade_global(list(categoria_id.values()))
+
+
+def aplicar_exponencial_local(valor_real, eps, cats, cat_to_id, delta_u):
+    cat_real_id = cat_to_id[valor_real]
+
+    # 4. Calcula os escores quadráticos negativos para cada categoria candidata.
+    scores = np.array([
+        funcao_score(cat_real_id, cat_to_id[categoria])
         for categoria in cats
     ], dtype=float)
-    probs = pesos
-    probs = probs / probs.sum()
+
+    # Se a sensibilidade for zero, escolhe deterministicamente o melhor escore.
+    if delta_u == 0:
+        idx = int(np.argmax(scores))
+        return cats[idx]
+
+    pesos = np.exp((eps * scores) / (2.0 * delta_u))
+    probs = pesos / pesos.sum()
     return np.random.choice(cats, p=probs)
 
 
@@ -55,7 +82,9 @@ relatorio_erros = []
 
 # 7. Para cada epsilon, gera uma versão privada da contagem e mede o MAE.
 for ax, epsilon, epsilon_label in zip(axs, epsilons, epsilon_labels):
-    faixa_privada = df['Faixa_Etaria'].apply(lambda valor: aplicar_exponencial_local(valor, epsilon, labels))
+    faixa_privada = df['Faixa_Etaria'].apply(
+        lambda valor: aplicar_exponencial_local(valor, epsilon, labels, categoria_id, delta_u_global)
+    )
     contagem_exponencial = faixa_privada.value_counts().reindex(labels, fill_value=0)
 
     erro_absoluto = np.abs(contagem_real.values - contagem_exponencial.values).sum()
@@ -96,6 +125,7 @@ plt.savefig('resultado_exponencial_completo.png', dpi=300)
 
 # 9. Exibe o relatório de erro por epsilon.
 print("\n--- Relatório ---")
+print(f"Delta_u global: {delta_u_global:.2f}")
 for epsilon_label, erro_absoluto, mae in relatorio_erros:
     print(f"epsilon={epsilon_label} -> Erro Absoluto Total: {erro_absoluto:.0f} | MAE: {mae:.2f}")
 print("Gráfico gerado: 'resultado_exponencial_completo.png'")
