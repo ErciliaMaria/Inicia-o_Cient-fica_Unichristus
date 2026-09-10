@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Easy Differential Privacy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Easy Differential Privacy
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;diffpriv&rsquo; version 0.4.2</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="diffpriv.html">diffpriv-package</a></td>
+<td>'diffpriv': practical differential privacy in R.</td></tr>
+<tr><td style="width: 25%;"><a href="bernstein.html">bernstein</a></td>
+<td>Fit a Bernstein polynomial approximation.</td></tr>
+<tr><td style="width: 25%;"><a href="diffpriv.html">diffpriv</a></td>
+<td>'diffpriv': practical differential privacy in R.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMech-class.html">DPMech-class</a></td>
+<td>An S4 class for differentially-private mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechBernstein-class.html">DPMechBernstein</a></td>
+<td>An S4 class for the Bernstein mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechBernstein-class.html">DPMechBernstein-class</a></td>
+<td>An S4 class for the Bernstein mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechExponential-class.html">DPMechExponential</a></td>
+<td>An S4 class for the exponential mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechExponential-class.html">DPMechExponential-class</a></td>
+<td>An S4 class for the exponential mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechGaussian-class.html">DPMechGaussian</a></td>
+<td>An S4 class for the Gaussian mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechGaussian-class.html">DPMechGaussian-class</a></td>
+<td>An S4 class for the Gaussian mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechLaplace-class.html">DPMechLaplace</a></td>
+<td>An S4 class for the Laplace mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechLaplace-class.html">DPMechLaplace-class</a></td>
+<td>An S4 class for the Laplace mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechNumeric-class.html">DPMechNumeric</a></td>
+<td>A virtual S4 class for differentially-private numeric mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechNumeric-class.html">DPMechNumeric-class</a></td>
+<td>A virtual S4 class for differentially-private numeric mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">DPParamsDel</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">DPParamsDel-class</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">DPParamsEps</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">DPParamsEps-class</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">DPParamsGam</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">DPParamsGam-class</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">getDelta-method</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">getEpsilon-method</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">getGamma-method</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="predict.bernstein.html">predict.bernstein</a></td>
+<td>Evaluate Bernstein approximations on data.</td></tr>
+<tr><td style="width: 25%;"><a href="releaseResponse.html">releaseResponse</a></td>
+<td>'DPMech' private release method.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechBernstein-class.html">releaseResponse-method</a></td>
+<td>An S4 class for the Bernstein mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechExponential-class.html">releaseResponse-method</a></td>
+<td>An S4 class for the exponential mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechNumeric-class.html">releaseResponse-method</a></td>
+<td>A virtual S4 class for differentially-private numeric mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivityNorm.html">sensitivityNorm</a></td>
+<td>'DPMech' sensitivity-inducing norm.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechBernstein-class.html">sensitivityNorm-method</a></td>
+<td>An S4 class for the Bernstein mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechExponential-class.html">sensitivityNorm-method</a></td>
+<td>An S4 class for the exponential mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechNumeric-class.html">sensitivityNorm-method</a></td>
+<td>A virtual S4 class for differentially-private numeric mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivitySampler.html">sensitivitySampler</a></td>
+<td>Sensitivity sampler for 'DPMech-class"s.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivitySampler-DPMech-function-numeric-method.html">sensitivitySampler-method</a></td>
+<td>Sensitivity sampler for 'DPMech-class"s.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivitySamplerManual.html">sensitivitySamplerManual</a></td>
+<td>Sensitivity sampler for 'DPMech-class'.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivitySamplerManual-DPMech-function-numeric-numeric-numeric-method.html">sensitivitySamplerManual-method</a></td>
+<td>Sensitivity sampler for 'DPMech-class'.</td></tr>
+<tr><td style="width: 25%;"><a href="sensitivitySamplerManual-DPMechNumeric-function-numeric-numeric-numeric-method.html">sensitivitySamplerManual-method</a></td>
+<td>Sensitivity sampler for 'DPMechNumeric-class'.</td></tr>
+<tr><td style="width: 25%;"><a href="setDelta-set.html">setDelta&lt;-</a></td>
+<td>Setter for slot 'delta'.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">setDelta&lt;--method</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="setEpsilon-set.html">setEpsilon&lt;-</a></td>
+<td>Setter for slot 'epsilon'.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">setEpsilon&lt;--method</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="setGamma-set.html">setGamma&lt;-</a></td>
+<td>Setter for slot 'gamma'.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">setGamma&lt;--method</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechBernstein-class.html">show-method</a></td>
+<td>An S4 class for the Bernstein mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechExponential-class.html">show-method</a></td>
+<td>An S4 class for the exponential mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechGaussian-class.html">show-method</a></td>
+<td>An S4 class for the Gaussian mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechLaplace-class.html">show-method</a></td>
+<td>An S4 class for the Laplace mechanism of differential privacy.</td></tr>
+<tr><td style="width: 25%;"><a href="DPMechNumeric-class.html">show-method</a></td>
+<td>A virtual S4 class for differentially-private numeric mechanisms.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">show-method</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">show-method</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">show-method</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsDel-class.html">toGamma-method</a></td>
+<td>An S4 class for relaxed differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsEps-class.html">toGamma-method</a></td>
+<td>An S4 class for basic differential privacy parameters.</td></tr>
+<tr><td style="width: 25%;"><a href="DPParamsGam-class.html">toGamma-method</a></td>
+<td>An S4 class for random differential privacy parameters.</td></tr>
+</table>
+</div></body></html>

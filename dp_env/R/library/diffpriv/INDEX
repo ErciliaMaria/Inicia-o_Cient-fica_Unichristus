@@ -1,0 +1,37 @@
+DPMech-class            An S4 class for differentially-private
+                        mechanisms.
+DPMechBernstein-class   An S4 class for the Bernstein mechanism of
+                        differential privacy.
+DPMechExponential-class
+                        An S4 class for the exponential mechanism of
+                        differential privacy.
+DPMechGaussian-class    An S4 class for the Gaussian mechanism of
+                        differential privacy.
+DPMechLaplace-class     An S4 class for the Laplace mechanism of
+                        differential privacy.
+DPMechNumeric-class     A virtual S4 class for differentially-private
+                        numeric mechanisms.
+DPParamsDel-class       An S4 class for relaxed differential privacy
+                        parameters.
+DPParamsEps-class       An S4 class for basic differential privacy
+                        parameters.
+DPParamsGam-class       An S4 class for random differential privacy
+                        parameters.
+bernstein               Fit a Bernstein polynomial approximation.
+diffpriv                'diffpriv': practical differential privacy in
+                        R.
+predict.bernstein       Evaluate Bernstein approximations on data.
+releaseResponse         'DPMech' private release method.
+sensitivityNorm         'DPMech' sensitivity-inducing norm.
+sensitivitySampler      Sensitivity sampler for 'DPMech-class"s.
+sensitivitySampler,DPMech,function,numeric-method
+                        Sensitivity sampler for 'DPMech-class"s.
+sensitivitySamplerManual
+                        Sensitivity sampler for 'DPMech-class'.
+sensitivitySamplerManual,DPMech,function,numeric,numeric,numeric-method
+                        Sensitivity sampler for 'DPMech-class'.
+sensitivitySamplerManual,DPMechNumeric,function,numeric,numeric,numeric-method
+                        Sensitivity sampler for 'DPMechNumeric-class'.
+setDelta<-              Setter for slot 'delta'.
+setEpsilon<-            Setter for slot 'epsilon'.
+setGamma<-              Setter for slot 'gamma'.
