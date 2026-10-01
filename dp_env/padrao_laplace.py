@@ -30,15 +30,8 @@ def calcular_metricas(amostras, media_real, epsilon, tecnica):
     amostras = np.asarray(amostras, dtype=float)
     erros = amostras - media_real
     return {
-        'tecnica': tecnica,
         'epsilon': epsilon,
-        'media_real': media_real,
-        'media_dp': float(np.mean(amostras)),
-        'bias': float(np.mean(erros)),
-        'mae': float(np.mean(np.abs(erros))),
         'mse': float(np.mean(erros ** 2)),
-        'desvio_padrao': float(np.std(amostras)),
-        'n_repeticoes': len(amostras),
     }
 
 
@@ -46,19 +39,22 @@ def salvar_resultados(resultados, tecnica):
     destino = Path(__file__).resolve().parent / f'resultados-laplace-{tecnica}.csv'
     campos = list(resultados[0])
     with destino.open('w', newline='', encoding='utf-8') as arquivo:
-        escritor = csv.DictWriter(arquivo, fieldnames=campos)
+        escritor = csv.DictWriter(arquivo, fieldnames=campos, delimiter=';')
         escritor.writeheader()
-        escritor.writerows(resultados)
+        escritor.writerows(
+            {
+                campo: f'{resultado[campo]:.6f}'.replace('.', ',')
+                for campo in campos
+            }
+            for resultado in resultados
+        )
     return destino
 
 
 def imprimir_resultados(resultados):
-    print('tecnica,epsilon,media_real,media_dp,bias,mae,mse,desvio_padrao,n_repeticoes')
+    print('epsilon;mse')
     for resultado in resultados:
         print(
-            f"{resultado['tecnica']},{resultado['epsilon']:.6f},"
-            f"{resultado['media_real']:.6f},{resultado['media_dp']:.6f},"
-            f"{resultado['bias']:.6f},{resultado['mae']:.6f},"
-            f"{resultado['mse']:.6f},{resultado['desvio_padrao']:.6f},"
-            f"{resultado['n_repeticoes']}"
+            f"{resultado['epsilon']:.6f};"
+            f"{resultado['mse']:.6f}".replace('.', ',')
         )

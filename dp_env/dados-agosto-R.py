@@ -12,8 +12,6 @@ from rpy2.robjects.packages import importr
 from padrao_laplace import (
     EPSILONS,
     LIMITES,
-    N_REPETICOES,
-    SEMENTE,
     calcular_metricas,
     carregar_idades,
     imprimir_resultados,
@@ -27,12 +25,18 @@ pandas2ri.activate()
 # Usa a biblioteca R local do projeto para não exigir instalação global.
 r_library = Path(__file__).resolve().parent / 'R' / 'library'
 r_library.mkdir(parents=True, exist_ok=True)
-existing_r_libraries = list(robjects.r('.libPaths()'))
+existing_r_libraries = []
+for library in robjects.r('.libPaths()'):
+    library_path = Path(str(library))
+    if library_path.is_dir() and any(
+        (package / 'DESCRIPTION').is_file() for package in library_path.iterdir()
+    ):
+        existing_r_libraries.append(str(library_path))
 robjects.r['.libPaths'](
     robjects.StrVector([str(r_library), *existing_r_libraries])
 )
 
-diffpriv = importr('diffpriv')
+diffpriv = importr('diffpriv', lib_loc=str(r_library))
 
 # 1. Carregar os dados no Python
 nome_do_arquivo = Path(__file__).resolve().parent / 'heart_disease_cleveland.csv'
@@ -45,7 +49,6 @@ n = len(idades_np)
 
 # 2. Configurar o mecanismo DPMechLaplace do R
 sensibilidade = (LIMITES[1] - LIMITES[0]) / n
-robjects.r(f'set.seed({SEMENTE})')
 
 # Cria a função alvo em R (calcular a média)
 robjects.r('f_media <- function(xs) { mean(xs) }')
@@ -63,18 +66,13 @@ resultados = []
 for eps in EPSILONS:
     # Instancia a classe DPParamsEps da biblioteca R
     privacy_params = diffpriv.DPParamsEps(epsilon=eps)
-    medias_simuladas = []
 
-    for _ in range(N_REPETICOES):
-        # Executa o método releaseResponse da lib R
-        res = diffpriv.releaseResponse(mecanismo, privacy_params, idades_np)
-        
-        # Extrai o valor do objeto retornado pelo R
-        # O retorno é uma lista R S3/S4, acessamos a resposta pelo índice ou slot
-        resposta = float(res.rx2('response')[0])
-        medias_simuladas.append(resposta)
+    # Executa uma única rodada do mecanismo R e preserva uma amostra de tamanho 1.
+    res = diffpriv.releaseResponse(mecanismo, privacy_params, idades_np)
 
-    medias_simuladas = np.array(medias_simuladas)
+    # O retorno é uma lista R S3/S4; a resposta fica no campo response.
+    resposta = float(res.rx2('response')[0])
+    medias_simuladas = np.array([resposta])
     resultados.append(
         calcular_metricas(medias_simuladas, media_real_idade, eps, 'R-diffpriv')
     )

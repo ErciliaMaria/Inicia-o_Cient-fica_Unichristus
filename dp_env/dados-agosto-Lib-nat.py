@@ -2,8 +2,6 @@ import random
 from padrao_laplace import (
     EPSILONS,
     LIMITES,
-    N_REPETICOES,
-    SEMENTE,
     calcular_metricas,
     carregar_idades,
     imprimir_resultados,
@@ -13,7 +11,6 @@ from padrao_laplace import (
 idades = carregar_idades()
 media_real_idade = float(sum(idades) / len(idades))
 sensibilidade = (LIMITES[1] - LIMITES[0]) / len(idades)
-random.seed(SEMENTE)
 
 def media_privatizada_laplace(dados, epsilon, sensibilidade):
     """
@@ -32,12 +29,9 @@ def media_privatizada_laplace(dados, epsilon, sensibilidade):
 
 resultados = []
 for epsilon in EPSILONS:
-    medias_simuladas = [
-        media_privatizada_laplace(idades, epsilon, sensibilidade)
-        for _ in range(N_REPETICOES)
-    ]
+    media_simulada = media_privatizada_laplace(idades, epsilon, sensibilidade)
     resultados.append(
-        calcular_metricas(medias_simuladas, media_real_idade, epsilon, 'lib-nat')
+        calcular_metricas([media_simulada], media_real_idade, epsilon, 'lib-nat')
     )
 
 salvar_resultados(resultados, 'lib-nat')
